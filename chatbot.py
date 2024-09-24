@@ -4,11 +4,23 @@ from langchain_community.llms import Ollama
 import streamlit as st
 
 # Set up the Streamlit framework
-st.title('Langchain Chatbot With LLAMA3.1 model')  # Set the title of the Streamlit app
+st.title('Personal Chatbot')  # Set the title of the Streamlit app
 input_text=st.text_input("Ask your question!")  # Create a text input field in the Streamlit app
 
+fp = st.sidebar.file_uploader("Upload a PDF file") 
+
+add_selectbox = st.sidebar.selectbox(
+    "Choose the LLM",
+    ("Llama3.1", "Qwen2.5")
+)
+# llm_text = st.text_input(add_selectbox)
 # Initialize the Ollama model
-llm=Ollama(model="llama3.1")
+
+if add_selectbox == "Llama3.1":
+    llm=Ollama(model="llama3.1")
+else:
+    llm=Ollama(model="qwen2.5:7b")
+
 
 # Define a prompt template for the chatbot
 prompt=ChatPromptTemplate.from_messages(
